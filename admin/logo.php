@@ -4,17 +4,17 @@
 ?>
 <div class="breadLine">
 	<ul class="breadcrumb">
-		<li><a href="index.php">Admin CP</a> <span class="divider">></span></li>                
+		<li><a href="index.php">Admin CP</a> <span class="divider">></span></li>
 		<a href="#"><li class="active">Logo</li></a>
-	</ul>                                                
+	</ul>
 </div>
 <?php
 
 	if(isset($_SESSION['idadmin']))
 	{	$sql1=mysql_query("select * from logo");
-		$row=mysql_fetch_array($sql1);	
+		$row=mysql_fetch_array($sql1);
 		if($_POST['ok'])
-		{			
+		{
 			$file_name=$_FILES['upload']['name'];
 			$extent_file="png";
 			$pattern='#.+\.(png)$#i';
@@ -36,22 +36,22 @@
 					$update=mysql_query("insert into logo(noidung) values('$dest')");
 					if($update)
 					{
-						echo "Ok. Da Xong!";
+						echo "Successfully updated!";
 					}
 					else
 					{
-						echo "Đăng Logo thất bại!";
+						echo "Update fail!";
 					}
 				}
 				else
 				{
 					$flag=false;
-					echo "Đăng Logo thất bại!";
+					echo "Update fail!";
 				}
 			}
 			else
 			{
-				echo "Kiểu File không hợp lệ";
+				echo "File formal must be PNG";
 			}
 		}
 	?>
@@ -64,14 +64,14 @@
 				<h1>Upload Logo</h1>
 			<div class="clear"></div>
 		</div>
-		<div class="block-fluid">                        
+		<div class="block-fluid">
 			<div class="row-form">
 				<div class="span5">File Upload:</div>
 				<div class="span7">
 					<input type="file" name="upload" id="upload"/>
 				</div>
 				<div class="clear"></div>
-			</div> 
+			</div>
 
 				<div class="clear"></div>
 
@@ -84,11 +84,11 @@
 				<div class="clear"></div>
 			</div>
 		</div>
-    </div>   
+    </div>
 	</form>
 	<div class="dr"><span></span></div>
-	<div class="dr"><span></span></div>            
+	<div class="dr"><span></span></div>
 </div>
-<?php 
+<?php
 	}
 ?>

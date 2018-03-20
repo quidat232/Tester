@@ -11,26 +11,25 @@ audio
 	mysql_query("UPDATE baihat set luotnghe=luotnghe+1 where id='$id'");
 	$sql=mysql_query("select*from baihat where id='$id'");
 	$row=mysql_fetch_array($sql);
+	$src = $row['duongdan'];
+	$search = '../' ;
+	$trimmed = str_replace($search, '', $src);
 ?>
 <h3 style="color:blue;font-size:16pt;"><?php echo $row['tenbaihat'];?> </h3>
- <span style="font-size:11pt;color:#999;">Trình bày: <?php echo $row['casy'];?>| Lượt nghe:<?php echo $row['luotnghe'];?></span>
+ <span style="font-size:11pt;color:#999;">Performed by: <?php echo $row['casy'];?>| View:<?php echo $row['luotnghe'];?></span>
  <br>
-
-<!--	<embed height="50"  width="350" src="<?php echo $row['duongdan'];?>" autostart="true"/> -->
-
 <audio controls="controls" autoplay="autoplay" loop="1">
-  <source src="<?php echo $row['duongdan'];?>" type="audio/mpeg">
-  <source src="<?php echo $row['duongdan'];?>" type="audio/ogg">
-  <embed height="50" width="100" src="<?php echo $row['duongdan'];?>">
+  <source src="<?php echo $trimmed;?>" type="audio/mpeg">
+  <source src="<?php echo $trimmed;?>" type="audio/mpeg">
+  <embed height="50" width="100" src="<?php echo $trimmed;?>">
 </audio>
 
 <br><br>
 <table width="100%">
 <tr>
-	<td bgcolor="#24BDE2" height="35px" style="padding-left: 10px;color:#fff"> BÀI HÁT CÙNG THỂ LOẠI</td>
+	<td bgcolor="#24BDE2" height="35px" style="padding-left: 10px;color:#fff">RAMDOM SONGS</td>
 </tr>
 <?php
-
 	$cung=mysql_query("select*from baihat where id!='$id'");
 	while($rowc=mysql_fetch_array($cung))
 	{
@@ -43,17 +42,17 @@ audio
             	<img src="image/giaodien/no-img00.jpg" class="img" height="46px" width="46px">
             </div>
 	<p class="song">
-				<a title="Nghe bài hát <?php echo $rowc['tenbaihat']; ?>" href="./?mod=play&baihat=<?php echo $rowc['id'];?>"><?php echo $rowc['tenbaihat']; ?></a>
+				<a title="Listen to <?php echo $rowc['tenbaihat']; ?>" href="./?mod=play&baihat=<?php echo $rowc['id'];?>"><?php echo $rowc['tenbaihat']; ?></a>
 			</p>
-			<p class="singer">Trình bày:
-				<a title="Tìm kiếm bài hát của ca sĩ <?php echo $rowc['casy']; ?>" href=""><?php echo $rowc['casy']; ?></a>
+			<p class="singer">Performed by:
+				<a title="Search songs of <?php echo $rowc['casy']; ?>" href=""><?php echo $rowc['casy']; ?></a>
 			</p>
-			<p class="time">Thể loại:
+			<p class="time">Genre:
 				<span class="singer_">
-					<a href="" title="<?php echo $rowc['theloai']; ?>"><?php echo $row['theloai']; ?></a>
+					<a href="" title="<?php echo $rowc['theloai']; ?>"><?php echo $rowc['theloai']; ?></a>
 				</span>
 			</p>
-			<p class="time">Lượt nghe:
+			<p class="time">View:
 				<span class="singer_">
 					<?php echo $rowc['luotnghe']; ?></a>
 				</span>

@@ -1,13 +1,13 @@
-<?php 
+<?php
 	session_start();
 	include("config.php");
-	$username =$_POST['username'];
-	$password = ($_POST["password"]);
+	$username =	 $_POST['username'];
+	$password = $_POST["password"];
 	$sql=mysql_query("select*from user where username='$username' and password='$password'");
 	$row=mysql_num_rows($sql);
 	if($row==0)
 	{
-		echo '<script type="text/javascript"> alert("Ten dang nhap hoac mat khau sai"); history.go(-1)</script>';
+		echo '<script type="text/javascript"> alert("Username or Password is not correct"); history.go(-1)</script>';
 	}
 	else
 	{

@@ -1,13 +1,13 @@
 jQuery.fn.boxy = function(options) {
     options = options || {};
-    return this.each(function() {      
+    return this.each(function() {
         var node = this.nodeName.toLowerCase(), self = this;
         if (node == 'a') {
             jQuery(this).click(function() {
                 var active = Boxy.linkedTo(this),
                     href = this.getAttribute('href'),
                     localOptions = jQuery.extend({actuator: this, title: this.title}, options);
-                    
+
                 if (active) {
                     active.show();
                 } else if (href.indexOf('#') >= 0) {
@@ -20,7 +20,7 @@ jQuery.fn.boxy = function(options) {
                     if (!localOptions.cache) localOptions.unloadOnHide = true;
                     Boxy.load(this.href, localOptions);
                 }
-                
+
                 return false;
             });
         } else if (node == 'form') {
@@ -38,26 +38,26 @@ jQuery.fn.boxy = function(options) {
 // Boxy Class
 
 function Boxy(element, options) {
-    
+
     this.boxy = jQuery(Boxy.WRAPPER);
     jQuery.data(this.boxy[0], 'boxy', this);
-    
+
     this.visible = false;
     this.options = jQuery.extend({}, Boxy.DEFAULTS, options || {});
-    
+
     if (this.options.modal) {
         this.options = jQuery.extend(this.options, {center: true, draggable: false});
     }
-    
+
     // options.actuator == DOM element that opened this boxy
     // association will be automatically deleted when this boxy is remove()d
     if (this.options.actuator) {
         jQuery.data(this.options.actuator, 'active.boxy', this);
     }
-    
+
     this.setContent(element || "<div></div>");
     this._setupTitleBar();
-    
+
     this.boxy.css('display', 'none').appendTo(document.body);
     this.toTop();
 
@@ -68,7 +68,7 @@ function Boxy(element, options) {
             this.boxy.addClass('fixed');
         }
     }
-    
+
     if (this.options.center && Boxy._u(this.options.x, this.options.y)) {
         this.center();
     } else {
@@ -77,7 +77,7 @@ function Boxy(element, options) {
             Boxy._u(this.options.y) ? this.options.y : Boxy.DEFAULT_Y
         );
     }
-    
+
     if (this.options.show) this.show();
 
 };
@@ -85,13 +85,13 @@ function Boxy(element, options) {
 Boxy.EF = function() {};
 
 jQuery.extend(Boxy, {
-    
+
     WRAPPER:    "<table cellspacing='0' cellpadding='0' border='0' class='boxy-wrapper'>" +
                 "<tr><td class='top-left'></td><td class='top'></td><td class='top-right'></td></tr>" +
                 "<tr><td class='left_b'></td><td class='boxy-inner'></td><td class='right_b'></td></tr>" +
                 "<tr><td class='bottom-left'></td><td class='bottom'></td><td class='bottom-right'></td></tr>" +
                 "</table>",
-    
+
     DEFAULTS: {
         title:                  null,           // titlebar text. titlebar will not be visible if not set.
         closeable:              true,           // display close link in titlebar?
@@ -111,14 +111,14 @@ jQuery.extend(Boxy, {
         afterHide:              Boxy.EF,        // callback fired after dialog is hidden. executed in context of Boxy instance.
         beforeUnload:           Boxy.EF         // callback fired after dialog is unloaded. executed in context of Boxy instance.
     },
-    
+
     DEFAULT_X:          50,
     DEFAULT_Y:          50,
     zIndex:             1337,
     dragConfigured:     false, // only set up one drag handler for all boxys
     resizeConfigured:   false,
     dragging:           null,
-    
+
     // load a URL and display in boxy
     // url - url to load
     // options keys (any not listed below are passed to boxy constructor)
@@ -126,9 +126,9 @@ jQuery.extend(Boxy, {
     //   cache: cache retrieved content? default: false
     //   filter: jQuery selector used to filter remote content
     load: function(url, options) {
-        
+
         options = options || {};
-        
+
         var ajax = {
             url: url, type: 'GET', dataType: 'html', cache: false, success: function(html) {
                 html = jQuery(html);
@@ -136,18 +136,18 @@ jQuery.extend(Boxy, {
                 new Boxy(html, options);
             }
         };
-        
+
         jQuery.each(['type', 'cache'], function() {
             if (this in options) {
                 ajax[this] = options[this];
                 delete options[this];
             }
         });
-        
+
         jQuery.ajax(ajax);
-        
+
     },
-    
+
     // allows you to get a handle to the containing boxy instance of any element
     // e.g. <a href='#' onclick='alert(Boxy.get(this));'>inspect!</a>.
     // this returns the actual instance of the boxy 'class', not just a DOM element.
@@ -156,19 +156,19 @@ jQuery.extend(Boxy, {
         var p = jQuery(ele).parents('.boxy-wrapper');
         return p.length ? jQuery.data(p[0], 'boxy') : null;
     },
-    
+
     // returns the boxy instance which has been linked to a given element via the
     // 'actuator' constructor option.
     linkedTo: function(ele) {
         return jQuery.data(ele, 'active.boxy');
     },
-    
+
     // displays an alert box with a given message, calling optional callback
     // after dismissal.
     alert: function(message, callback, options) {
         return Boxy.ask(message, ['OK'], callback, options);
     },
-    
+
     // displays an alert box with a given message, calling after callback iff
     // user selects OK.
     confirm: function(message, after, options) {
@@ -176,20 +176,20 @@ jQuery.extend(Boxy, {
             if (response == 'OK') after();
         }, options);
     },
-    
+
     // asks a question with multiple responses presented as buttons
     // selected item is returned to a callback method.
     // answers may be either an array or a hash. if it's an array, the
     // the callback will received the selected value. if it's a hash,
     // you'll get the corresponding key.
     ask: function(question, answers, callback, options) {
-        
+
         options = jQuery.extend({modal: true, closeable: false},
                                 options || {},
                                 {show: true, unloadOnHide: true});
-        
+
         var body = jQuery('<div></div>').append(jQuery('<div class="question"></div>').html(question));
-        
+
         // ick
         var map = {}, answerStrings = [];
         if (answers instanceof Array) {
@@ -203,54 +203,54 @@ jQuery.extend(Boxy, {
                 answerStrings.push(answers[k]);
             }
         }
-        
+
         var buttons = jQuery('<form class="answers"></form>');
         buttons.html(jQuery.map(answerStrings, function(v) {
             return "<input type='button' value='" + v + "' />";
         }).join(' '));
-        
+
         jQuery('input[type=button]', buttons).click(function() {
             var clicked = this;
             Boxy.get(this).hide(function() {
                 if (callback) callback(map[clicked.value]);
             });
         });
-        
+
         body.append(buttons);
-        
+
         new Boxy(body, options);
-        
+
     },
-    
+
     // returns true if a modal boxy is visible, false otherwise
     isModalVisible: function() {
         return jQuery('.boxy-modal-blackout').length > 0;
     },
-    
+
     _u: function() {
         for (var i = 0; i < arguments.length; i++)
             if (typeof arguments[i] != 'undefined') return false;
         return true;
     },
-    
+
     _handleResize: function(evt) {
         var d = jQuery(document);
         jQuery('.boxy-modal-blackout').css('display', 'none').css({
             width: d.width(), height: d.height()
         }).css('display', 'block');
     },
-    
+
     _handleDrag: function(evt) {
         var d;
         if (d = Boxy.dragging) {
             d[0].boxy.css({left: evt.pageX - d[1], top: evt.pageY - d[2]});
         }
     },
-    
+
     _nextZ: function() {
         return Boxy.zIndex++;
     },
-    
+
     _viewport: function() {
         var d = document.documentElement, b = document.body, w = window;
         return jQuery.extend(
@@ -267,7 +267,7 @@ jQuery.extend(Boxy, {
 });
 
 Boxy.prototype = {
-    
+
     // Returns the size of this boxy instance without displaying it.
     // Do not use this method if boxy is already visible, use getSize() instead.
     estimateSize: function() {
@@ -276,43 +276,43 @@ Boxy.prototype = {
         this.boxy.css('display', 'none').css('visibility', 'visible');
         return dims;
     },
-                
+
     // Returns the dimensions of the entire boxy dialog as [width,height]
     getSize: function() {
         return [this.boxy.width(), this.boxy.height()];
     },
-    
+
     // Returns the dimensions of the content region as [width,height]
     getContentSize: function() {
         var c = this.getContent();
         return [c.width(), c.height()];
     },
-    
+
     // Returns the position of this dialog as [x,y]
     getPosition: function() {
         var b = this.boxy[0];
         return [b.offsetLeft, b.offsetTop];
     },
-    
+
     // Returns the center point of this dialog as [x,y]
     getCenter: function() {
         var p = this.getPosition();
         var s = this.getSize();
         return [Math.floor(p[0] + s[0] / 2), Math.floor(p[1] + s[1] / 2)];
     },
-                
+
     // Returns a jQuery object wrapping the inner boxy region.
     // Not much reason to use this, you're probably more interested in getContent()
     getInner: function() {
         return jQuery('.boxy-inner', this.boxy);
     },
-    
+
     // Returns a jQuery object wrapping the boxy content region.
     // This is the user-editable content area (i.e. excludes titlebar)
     getContent: function() {
         return jQuery('.boxy-content', this.boxy);
     },
-    
+
     // Replace dialog content
     setContent: function(newContent) {
         newContent = jQuery(newContent).css({display: 'block'}).addClass('boxy-content');
@@ -323,27 +323,27 @@ Boxy.prototype = {
         this.options.behaviours.call(this, newContent);
         return this;
     },
-    
+
     // Move this dialog to some position, funnily enough
     moveTo: function(x, y) {
         this.moveToX(x).moveToY(y);
         return this;
     },
-    
+
     // Move this dialog (x-coord only)
     moveToX: function(x) {
         if (typeof x == 'number') this.boxy.css({left: x});
         else this.centerX();
         return this;
     },
-    
+
     // Move this dialog (y-coord only)
     moveToY: function(y) {
         if (typeof y == 'number') this.boxy.css({top: y});
         else this.centerY();
         return this;
     },
-    
+
     // Move this dialog so that it is centered at (x,y)
     centerAt: function(x, y) {
         var s = this[this.visible ? 'getSize' : 'estimateSize']();
@@ -351,15 +351,15 @@ Boxy.prototype = {
         if (typeof y == 'number') this.moveToY(y - s[1] / 2);
         return this;
     },
-    
+
     centerAtX: function(x) {
         return this.centerAt(x, null);
     },
-    
+
     centerAtY: function(y) {
         return this.centerAt(null, y);
     },
-    
+
     // Center this dialog in the viewport
     // axis is optional, can be 'x', 'y'.
     center: function(axis) {
@@ -369,17 +369,17 @@ Boxy.prototype = {
         if (!axis || axis == 'y') this.centerAt(null, o[1] + v.height / 2);
         return this;
     },
-    
+
     // Center this dialog in the viewport (x-coord only)
     centerX: function() {
         return this.center('x');
     },
-    
+
     // Center this dialog in the viewport (y-coord only)
     centerY: function() {
         return this.center('y');
     },
-    
+
     // Resize the content region to a specific size
     resize: function(width, height, after) {
         if (!this.visible) return;
@@ -389,7 +389,7 @@ Boxy.prototype = {
         if (after) after(this);
         return this;
     },
-    
+
     // Tween the content region to a specific size
     tween: function(width, height, after) {
         if (!this.visible) return;
@@ -401,12 +401,12 @@ Boxy.prototype = {
         });
         return this;
     },
-    
+
     // Returns true if this dialog is visible, false otherwise
     isVisible: function() {
-        return this.visible;    
+        return this.visible;
     },
-    
+
     // Make this boxy instance visible
     show: function() {
         if (this.visible) return;
@@ -438,7 +438,7 @@ Boxy.prototype = {
         this._fire('afterShow');
         return this;
     },
-    
+
     // Hide this boxy instance
     hide: function(after) {
         if (!this.visible) return;
@@ -458,18 +458,18 @@ Boxy.prototype = {
         });
         return this;
     },
-    
+
     toggle: function() {
         this[this.visible ? 'hide' : 'show']();
         return this;
     },
-    
+
     hideAndUnload: function(after) {
         this.options.unloadOnHide = true;
         this.hide(after);
         return this;
     },
-    
+
     unload: function() {
         this._fire('beforeUnload');
         this.boxy.remove();
@@ -477,27 +477,27 @@ Boxy.prototype = {
             jQuery.data(this.options.actuator, 'active.boxy', false);
         }
     },
-    
+
     // Move this dialog box above all other boxy instances
     toTop: function() {
         this.boxy.css({zIndex: Boxy._nextZ()});
         return this;
     },
-    
+
     // Returns the title of this dialog
     getTitle: function() {
         return jQuery('> .title-bar h2', this.getInner()).html();
     },
-    
+
     // Sets the title of this dialog
     setTitle: function(t) {
         jQuery('> .title-bar h2', this.getInner()).html(t);
         return this;
     },
-    
+
     //
     // Don't touch these privates
-    
+
     _getBoundsForResize: function(width, height) {
         var csize = this.getContentSize();
         var delta = [width - csize[0], height - csize[1]];
@@ -505,7 +505,7 @@ Boxy.prototype = {
         return [Math.max(p[0] - delta[0] / 2, 0),
                 Math.max(p[1] - delta[1] / 2, 0), width, height];
     },
-    
+
     _setupTitleBar: function() {
         if (this.options.title) {
             var self = this;
@@ -535,7 +535,7 @@ Boxy.prototype = {
             this._setupDefaultBehaviours(tb);
         }
     },
-    
+
     _setupDefaultBehaviours: function(root) {
         var self = this;
         if (this.options.clickToFront) {
@@ -546,9 +546,9 @@ Boxy.prototype = {
             return false;
         }).mousedown(function(evt) { evt.stopPropagation(); });
     },
-    
+
     _fire: function(event) {
         this.options[event].call(this);
     }
-    
+
 };

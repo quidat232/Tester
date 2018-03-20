@@ -17,8 +17,8 @@
 		case "upload":
 			include("upload.php");
 			break;
-		case "chude":
-			include("chude.php");
+		case "album":
+			include("album.php");
 			break;
 		case "casy":
 			include("casy.php");

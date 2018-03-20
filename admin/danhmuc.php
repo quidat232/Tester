@@ -6,23 +6,22 @@
 
 	if(isset($_SESSION['idadmin']))
 	{
-    $sql1=mysql_query("select count(*) As sohang from baihatmoi");	
+    $sql1=mysql_query("select count(*) As sohang from baihatmoi");
 	$row=mysql_fetch_array($sql1);
 	{
 ?>
-		
+
 
 <div class="breadLine">
             <ul class="breadcrumb">
-                <li><a href="#">Simple Admin</a> <span class="divider">></span></li>                
+                <li><a href="#">Simple Admin</a> <span class="divider">></span></li>
                 <li class="active">Dashboard</li>
-            </ul>           
-        </div>        
+            </ul>
+        </div>
         <div class="workplace">
-                                    
+
             <div class="row-fluid">
                 <div class="span12">
-                    
                     <div class="widgetButtons">                        
                         <div class="bb"><a href="./?mod=nhacdadang"><span class="ibw-ok"></span></a></div>
                         <div class="bb">
@@ -36,11 +35,11 @@
                         </div>
                         <div class="bb"><a href="logout.php"><span class="ibw-power"></span></a></div>
                     </div>
-                    
+
                 </div>
-            </div>                                   
-            
+            </div>
+
             <div class="dr"><span></span></div>
-        
+
 </div>
 <?php } ?>

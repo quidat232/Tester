@@ -1,13 +1,15 @@
 <h1 id="tab_click_new_song">
-   
-   Tìm kiếm   
+   Search
 </h1>
 	<div id="load_new_song" style="padding: 10px;  padding-top: 0px;">
-<?php 
+<?php
 	$key=$_POST['key'];
 	if(isset($_POST['nuttim']))
-	{	
-		$tk=mysql_query("select * from baihat where tenbaihat like '%".$key."%' or theloai like '%".$key."%' or casy like '%".$key."%'");
+	{
+    $sqlcode= "select baihat.id as idbaihat,tenbaihat, casy, theloai, noidung
+              from baihat inner join album on baihat.album = album.noidung
+              where noidung like '%".$key."%' or tenbaihat like '%".$key."%' or theloai like '%".$key."%' or casy like '%".$key."%'";
+		$tk=mysql_query($sqlcode);
 		while($bai=mysql_fetch_array($tk))
 		{
 ?>
@@ -17,44 +19,21 @@
             	<img src="image/giaodien/no-img00.jpg" class="img" height="46px" width="46px">
             </div>
 			<p class="song">
-				<a title="Nghe bài hát <?php echo $bai['tenbaihat']; ?>" href="./?mod=play&baihat=<?php echo $bai['id'];?>"><?php echo $bai['tenbaihat']; ?></a> 
+				<a title="Listen To <?php echo $bai['tenbaihat']; ?>" href="./?mod=play&baihat=<?php echo $bai['idbaihat'];?>"><?php echo $bai['tenbaihat']; ?></a>
 			</p>
-			<p class="singer">Trình bày: 
-				<a title="Tìm kiếm bài hát của ca sĩ <?php echo $bai['casy']; ?>" href=""><?php echo $bai['casy']; ?></a>
+			<p class="singer">Performed by:
+				<a title="Search Song Of <?php echo $bai['casy']; ?>" href=""><?php echo $bai['casy']; ?></a>
 			</p>
-			<p class="time">Thể loại: 
+			<p class="time">Genre:
 				<span class="singer_">
-					<a title="Tìm kiếm bài hát thể loại <?php echo $bai['theloai']; ?>" href=""><?php echo $bai['theloai']; ?></a>
+					<a title="Search genre <?php echo $bai['theloai']; ?>" href=""><?php echo $bai['theloai']; ?></a>
 				</span>
 			</p>
 		</div>
-		<div class="right list_icon">
-			<div class="right-icon">
-                <a href="<?php echo $bai['tenbaihat']; ?>" target="_blank" title="Tải bài hát <?php echo $bai['tenbaihat']; ?> về máy">
-                    <img border="0" src="image/giaodien/down0000.gif" class="hover_img">
-                </a>
-            </div>
-			<!-- Playlist ADD -->
-			<div class="right-icon" id="playlist_22505">
-                <a style="cursor:pointer;" onClick="_load_box(22505);" title="Thêm bài hát <?php echo $bai['tenbaihat']; ?> vào nhạc yêu thích">
-                    <img src="image/giaodien/add00000.gif" class="hover_img">
-                </a>
-            </div>
-			<div class="_PL_BOX" id="_load_box_22505" style="display:none;">
-            	<span class="_PL_LOAD" id="_load_box_pl_22505"></span>
-            </div>
-			
-			<!-- End playlist ADD -->
-			<div class="clr">
-            </div>
-		</div>
-		
 		<div class="clr">
         </div>
-		
 	</div>
 <?php
-		
 		}
 	}
 ?>

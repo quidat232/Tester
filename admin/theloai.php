@@ -4,9 +4,9 @@
 ?>
 <div class="breadLine">
 	<ul class="breadcrumb">
-		<li><a href="#">Admin CP</a> <span class="divider">></span></li>                
-		<li class="active">Thể Loại Nhạc</li>
-	</ul>                                                
+		<li><a href="#">Admin CP</a> <span class="divider">></span></li>
+		<li class="active">Genre</li>
+	</ul>
 </div>
 <?php
 
@@ -18,16 +18,16 @@
 			$sql=mysql_query("select * from theloai where noidung='$theloai'");
 			$row=mysql_num_rows($sql);
 			if($row!=0)
-			{					
-				echo '<script type="text/javascript"> alert("Da Co The Loai Nay Trong CSDL"); </script>';
+			{
+				echo '<script type="text/javascript"> alert("Genre already exists"); </script>';
 			}
 			else
 			{
 				mysql_query("insert into theloai(noidung) values('$theloai')");
-				echo 'Đã thêm thể loại nhạc: <b>'.$theloai.'</b> vào CSDL';
+				echo '<b>'.$theloai.'</b> has been added' ;
 			}
 		}
-		
+
 ?>
 <div class="workplace">
 	<form method="post" action="">
@@ -35,29 +35,29 @@
 		<div class="span6">
 		<div class="head">
 			<div class="isw-target"></div>
-				<h1>Thêm Thể Loại Nhạc</h1>
+				<h1>Add Genre</h1>
 			<div class="clear"></div>
 		</div>
-		<div class="block-fluid">                         
+		<div class="block-fluid">
 			<div class="row-form">
-				<div class="span2">Thể Loại:</div>
+				<div class="span2">Genre:</div>
 				<div class="span6">
 					<input type="text" name="theloai"/>
-				</div>                            
+				</div>
 				<div class="clear"></div>
-			</div> 
+			</div>
 			<div class="row-form">
 				<table width="348" border="0">
 					<tr>
-						<td width="127px"><input class="btn btn-large" type="submit" value="Thêm Zô" name="ok"></td>
+						<td width="127px"><input class="btn btn-large" type="submit" value="Add" name="ok"></td>
 						<td width="8">&nbsp;</td>
-						<td width="127"><input class="btn btn-large" type="reset" value="Nhập lại" onClick="return confirm('Làm lại á');"></td>
+						<td width="127"><input class="btn btn-large" type="reset" value="Redo" onClick="return confirm('Start Over ?');"></td>
 					</tr>
 				</table>
 				<div class="clear"></div>
 			</div>
 		</div>
-    </div>   
+    </div>
 	</form>
 	<div class="dr"><span></span></div>
 	<?php
@@ -66,13 +66,13 @@
 			$theloaicu=$_POST['theloaicu'];
 			$theloaimoi=$_POST['theloaimoi'];
 			$update= mysql_query("update theloai set noidung='$theloaimoi' where id IN ($theloaicu)");
-			echo '<b>Đã sửa thành công</b>';
+			echo '<b>Successfully Edited</b>';
 		}
 		if($_POST['no'])
 		{
 			$theloaicu=$_POST['theloaicu'];
 			mysql_query("DELETE FROM theloai WHERE id IN($theloaicu)");
-			echo '<b>Đã Xóa Thành Công </b>';
+			echo '<b>Successfully Deleted </b>';
 		}
 	?>
 	<form method="post" action="">
@@ -80,12 +80,12 @@
 		<div class="span6">
 		<div class="head">
 			<div class="isw-target"></div>
-				<h1>Sửa và Xóa Thể Loại</h1>
+				<h1>Edit and Delete Genre</h1>
 			<div class="clear"></div>
 		</div>
 		<div class="block-fluid">
 			<div class="row-form">
-				<div class="span3">Thể Loại Cũ:</div>
+				<div class="span3">Old genre:</div>
 				<div class="span6">
 					<select name="theloaicu">
 						<?php
@@ -102,24 +102,24 @@
 				<div class="clear"></div>
 			</div>
 			<div class="row-form">
-				<div class="span3">Thể Loại Mới:</div>
+				<div class="span3">New genre:</div>
 				<div class="span6">
 					<input type="text" name="theloaimoi"/>
-				</div>                            
+				</div>
 				<div class="clear"></div>
-			</div> 
+			</div>
 			<div class="row-form">
 				<table width="348" border="0">
 					<tr>
-						<td width="127px"><input class="btn btn-large" type="submit" value="Sửa Lại" name="sua"></td>
+						<td width="127px"><input class="btn btn-large" type="submit" value="Edit" name="sua"></td>
 						<td width="8">&nbsp;</td>
-						<td width="127"><input class="btn btn-large" type="submit" value="Xóa Luôn" onClick="return confirm('Xóa Nek!');" name="no"></td>
+						<td width="127"><input class="btn btn-large" type="submit" value="Delete" onClick="return confirm('Delete the genre?');" name="no"></td>
 					</tr>
 				</table>
 				<div class="clear"></div>
 			</div>
 		</div>
-    </div>   
+    </div>
 	</form>
 </div>
 <?php

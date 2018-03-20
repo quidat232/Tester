@@ -12,14 +12,14 @@ audio
 	$row=mysql_fetch_array($sql);
 ?>
 <h3 style="color:blue;font-size:16pt;"><?php echo $row['tenbaihat'];?> </h3>
- <span style="font-size:11pt;color:#999;">Trình bày: <?php echo $row['casy'];?></span>
+ <span style="font-size:11pt;color:#999;">Performed by: <?php echo $row['casy'];?></span>
  <br>
  <audio controls="controls" autoplay="1">
-  <source src="<?php echo "../".$row['duongdan'];?>" type="audio/mpeg">
-  <source src="<?php echo "../".$row['duongdan'];?>" type="audio/ogg">
-	<embed height="50" width="100" src="<?php echo "../".$row['duongdan'];?>">
+  <source src="<?php echo '.././'.$row['duongdan'];?>" type="audio/mpeg">
+  <source src="<?php echo '.././'.$row['duongdan'];?>" type="audio/mpeg">
+	<embed height="50" width="100" src="<?php echo '.././'.$row['duongdan'];?>">
 	</audio>
 <br><br>
 <a href="./?mod=nhacmoi">
-	<b>Quay Lại</b>
+	<b>Back</b>
 </a>

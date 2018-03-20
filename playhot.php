@@ -8,25 +8,25 @@ audio
 <?php
 	include "config.php";
 	$id=$_GET['baihat'];
-	mysql_query("UPDATE baihat set luotnghe=luotnghe+1 where id='$id'");
+	mysql_query("UPDATE baihathot set luotnghe=luotnghe+1 where id='$id'");
 	$sql=mysql_query("select*from baihathot where id='$id'");
 	$row=mysql_fetch_array($sql);
 ?>
 <h3 style="color:blue;font-size:16pt;"><?php echo $row['tenbaihat'];?> </h3>
- <span style="font-size:11pt;color:#999;">Trình bày: <?php echo $row['casy'];?>| Lượt nghe:<?php echo $row['luotnghe'];?></span>
+ <span style="font-size:11pt;color:#999;">Performed by: <?php echo $row['casy'];?>| View:<?php echo $row['luotnghe'];?></span>
  <br>
  <audio controls="controls">
   <source src="<?php echo "admin/".$row['duongdan'];?>" type="audio/mpeg">
   <source src="<?php echo "admin/".$row['duongdan'];?>" type="audio/ogg">
-	<embed height="50" width="100" src="<?php echo "admin/".$row['duongdan'];?>">
+	<embed height="50" width="100" src="<?php $row['duongdan'];?>">
 	</audio>
 <br><br>
 <table width="100%">
 <tr>
-	<td bgcolor="#24BDE2" height="35px" style="padding-left: 10px;color:#fff"> BÀI HÁT CÙNG THỂ LOẠI</td>
+	<td bgcolor="#24BDE2" height="35px" style="padding-left: 10px;color:#fff"> RANDOM SONGS</td>
 </tr>
 <?php
-	
+
 	$cung=mysql_query("select*from baihathot where id!='$id'");
 	while($rowc=mysql_fetch_array($cung))
 	{
@@ -39,17 +39,17 @@ audio
             	<img src="image/giaodien/no-img00.jpg" class="img" height="46px" width="46px">
             </div>
 	<p class="song">
-				<a title="Nghe bài hát <?php echo $rowc['tenbaihat']; ?>" href="./?mod=play&baihat=<?php echo $rowc['id'];?>"><?php echo $rowc['tenbaihat']; ?></a> 
+				<a title="Listen to <?php echo $rowc['tenbaihat']; ?>" href="./?mod=play&baihat=<?php echo $rowc['id'];?>"><?php echo $rowc['tenbaihat']; ?></a>
 			</p>
-			<p class="singer">Trình bày: 
-				<a title="Tìm kiếm bài hát của ca sĩ <?php echo $rowc['casy']; ?>" href=""><?php echo $rowc['casy']; ?></a>
+			<p class="singer">Performed by:
+				<a title="Search songs of <?php echo $rowc['casy']; ?>" href=""><?php echo $rowc['casy']; ?></a>
 			</p>
-			<p class="time">Thể loại: 
+			<p class="time">Genre:
 				<span class="singer_">
 					<a href="" title="<?php echo $rowc['theloai']; ?>"><?php echo $row['theloai']; ?></a>
 				</span>
 			</p>
-			<p class="time">Lượt nghe: 
+			<p class="time">View:
 				<span class="singer_">
 					<?php echo $rowc['luotnghe']; ?></a>
 				</span>

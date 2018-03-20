@@ -1,8 +1,6 @@
 <?php
 error_reporting(E_ERROR)
 ?>
-	<link type="text/css" href="style.css" rel="stylesheet">
-	<script type="text/javascript" src="js/xuly.js"></script>
 <?php
 	include "config.php";
 	if(isset($_POST["submit"]))
@@ -15,25 +13,25 @@ error_reporting(E_ERROR)
 	$ngaysinh = $_POST["ngay"]."-".$_POST["thang"]."-".$_POST["nam"];
 	$gioitinh =addslashes($_POST["gt"]);
 	$query = "SELECT username FROM user WHERE username ='$username';";
-    $result = mysql_query($query) or die(mysql_error());
+  $result = mysql_query($query) or die(mysql_error());
 	if (mysql_num_rows($result) != 0)
           {
-		  $usertt="User da ton tai";
+		  $usertt="User exists !!!";
 		  }
 	else
 	{
 		if(!preg_match('/^[^@]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$/', $email))
 		{
-		$mailer= "Email không hợp lệ!";
+		$mailer= "Email format isn't correct!";
 		}
-		
+
 		else
 		{
 			$sql = "insert into user(username,password,email,name,diachi,ngaysinh,gioitinh) values('$username','$password','$email','$hoten','$diachi','$ngaysinh','$gioitinh')";
 			$resual=mysql_query($sql) or die(mysql_error());
 				if($resual)
 				{
-				$tb="Tài khoản <b>$username</b> đã được tạo";
+				$tb="Account <b>$username</b> has been created";
 				}
 				else
 				{
@@ -42,45 +40,38 @@ error_reporting(E_ERROR)
 		}
 	}
 	}
-		 
-	?>			
+	?>
 <html>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <head>
-<script language=JavaScript> <!--title chạy-->
-	var txt="Nghe Nhạc Online - Tải Nhạc Mp3 Trực Tuyến Cực Nhanh             "; 
-	var espera=200; var refresco=null; function rotulo_title() 
-	{ 
-		document.title=txt; txt=txt.substring(1,txt.length)+txt.charAt(0); refresco=setTimeout("rotulo_title()",espera); 
-	} 
+<script language=JavaScript>
+	var txt="Listen to music online - Download free high quality music              ";
+	var espera=200; var refresco=null; function rotulo_title()
+	{
+		document.title=txt; txt=txt.substring(1,txt.length)+txt.charAt(0); refresco=setTimeout("rotulo_title()",espera);
+	}
 	rotulo_title();
 </SCRIPT>
-<!--CSS-->
-<link href="image/giaodien/favicon0.ico" rel="shortcut icon" type="image/x-icon">  
-<link href="css/styles00.css" rel="stylesheet" type="text/css">
-<link href="css/skin0000.css" rel="stylesheet" type="text/css">
-<link href="css/jquery00.css" rel="stylesheet" type="text/css">
+<link href="image/giaodien/favicon0.ico" rel="shortcut icon" type="image/x-icon">
+<link href="css/styles.css" rel="stylesheet" type="text/css">
+<link href="css/skin.css" rel="stylesheet" type="text/css">
+<link href="css/jquery.css" rel="stylesheet" type="text/css">
 <link href="css/menudrop.css" rel="stylesheet" type="text/css">
 <link href="css/form.css" rel="stylesheet" type="text/css">
-<!--Javascrip-->
 <script type="text/javascript" src="js/ichphien.js"></script>
-<script type="text/javascript" src="js/dropmenu.js"></script>
 <script type="text/javascript" src="js/jquery01.js"></script>
 <script type="text/javascript" src="js/ajax_loa.js"></script>
-<script type="text/javascript" src="js/jquery-s.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-<script type="text/javascript" src="xuly.js"></script>
 <script language="JavaScript" type="text/javascript">
 function check_form()
 {
 	user=document.form.username.value;
 	var loiuser=document.getElementById("iduser");
-	
+
 	{
 		if (user==0)
 		{
-		form.username.style.borderColor='red'; //Đổi màu border textbox
-		loiuser.innerHTML="Tài khoản không được bỏ trống !"; //Xuất ra dòng thông báo lỗi nếu user bỏ trống
+		form.username.style.borderColor='red';
+		loiuser.innerHTML="Username must be filled !";
 		document.form.username.focus();
 		return false;
 		}
@@ -88,7 +79,7 @@ function check_form()
 		if(user.length<6)
 		{
 		form.username.style.borderColor='red';
-		loiuser.innerHTML="Tài khoản phải lớn hơn 5 kí tự !";
+		loiuser.innerHTML="Username must contain more than 6 characters !";
 		document.form.username.focus();
 		return false;
 		}
@@ -96,26 +87,21 @@ function check_form()
 	}
 	pass=document.form.password.value;
 	var loimk=document.getElementById("idpass");
-	
+
 	{
 		if(pass==0)
 		{
-		form.password.style.borderColor='red'; //Đổi màu border textbox
-		loimk.innerHTML="Chưa nhập mật khẩu !"; //Xuất ra dòng thông báo lỗi 
+		form.password.style.borderColor='red';
+		loimk.innerHTML="Passworld must be filled !";
 		document.form.password.focus();
 		return false;
 		}
 		loimk.innerHTML="";
-	if(pass.length<6) 
-		{			
-
-			//alert("SS");
-
-			loimk.innerHTML="Mật khẩu phải nhiều hơn 5 kí tự !"; //Xuất ra dòng thông báo lỗi nếu họ tên bỏ trống.
-
-			document.form.password.focus(); //Đặt lại tiêu điểm (Tức là con trot chuột ấy) vào ô bị lỗi
-			return false; //Quay lại check tiếp khi nhận đc tiêu điểm .
-
+	if(pass.length<6)
+		{
+			loimk.innerHTML="Password must contain more than 6 characters !";
+			document.form.password.focus();
+			return false;
 		}
 
 		loipass.innerHTML="";
@@ -123,36 +109,20 @@ function check_form()
 		mail=document.form.email.value;
 		var loimail=document.getElementById("idmail");
 		dangmail= /^[\w.-]+@[\w.-]+\.[A-Za-z]{2,4}$/
-		kq=dangmail.test(mail); //Kiểm tra mail mà người dùng nhập vào.
-
-		if(mail=="") //Nếu mail bỏ trống
-
-		{	
-
-			loimail.innerHTML="Chưa nhập mail !";
-
+		kq=dangmail.test(mail);
+		if(mail=="")
+		{
+			loimail.innerHTML="Email must be filled !";
 			document.form.email.focus();
-
 			return false;
-
-		
-
 		}
-
 		loimail.innerHTML="";
-
 		if(kq==false)
-
-		{			
-
-			loimail.innerHTML="Sai đinh dạng mail !";
-
+		{
+			loimail.innerHTML="Email format is wrong !";
 			document.form.mail.focus();
-
 			return false;
-
 		}
-
 		loimail.innerHTML="";
 }
 </script>
@@ -171,15 +141,15 @@ function check_form()
 			<?php include("form/seach.php"); ?>
 		</div>
         <div class="tright"><!--form login-->
-            	<?php 
+            	<?php
 						if(isset($_SESSION['user_id'])&& isset($_SESSION['pass']))
 						{
 							echo "<div id='drop_menu'>";
-							echo "<ul id='drop_menu_ul'><li><a class='menuhoten'>Cá Nhân</a><ul id='drop_menu_sub'>";
-							echo "<li><a href='./?mod=suathongtin'>Sửa thông tin</a></li>";
+							echo "<ul id='drop_menu_ul'><li><a class='menuhoten'>User</a><ul id='drop_menu_sub'>";
+							echo "<li><a href='./?mod=suathongtin'>Edit Information</a></li>";
 							echo "<li><a href='logout.php'>logout</a></li>";
 							echo "</ul></li></ul>";
-							echo "</div>";							
+							echo "</div>";
 						}
 						else
 						{
@@ -187,17 +157,17 @@ function check_form()
 						}
 				?>
    	  </div>
-   	  </div> 
-       		<?php include("form/menutop.php");?>    <!--form menu top-->   
+   	  </div>
+       		<?php include("form/menutop.php");?>
         <div class="clr">
         </div>
     </div>
 </div>
 <div id="main">
-    <div id="contents">        	
+    <div id="contents">
         	<div id="dangky_thanhvien">
 <div class="content-block album">
-  <h2 class="content-block-title"> Đăng ký thành viên</h2>
+  <h2 class="content-block-title"> Register </h2>
 </div>
 				<div class="thongtin_dangky">
 					<div style="padding: 10px;">
@@ -220,29 +190,29 @@ form label{
 
 .rq, .error{color: red}
 </style><form action="" method="POST" name="form">
-			<div id="title_tk">Thông tin đăng ký</div>
+			<div id="title_tk">Register Information</div>
 			<div id="block">
 			<span style="color:red;text-align:center;"><?php echo $tb;?></span>
 			<form action="" method="POST" name="form">
-			<div id="form_title">Thông tin cá nhân</div>
+			<div id="form_title">Personal Information</div>
 			<table width="500px">
 				<tr>
-				<td width="150px">Họ tên:</td>
+				<td width="150px">Name:</td>
 				<td width="350px"><input type="text" name="hoten" size="30">
 				</tr>
 				<tr>
-				<td>Giới tính:</td>
-					<td>Nam<input type="radio" name="gt" value="Nam" checked="checked">
-						Nữ<input type="radio" name="gt" value="Nữ">
+				<td>Sex:</td>
+					<td>Male<input type="radio" name="gt" value="Nam" checked="checked">
+						Female<input type="radio" name="gt" value="Nữ">
 					</td>
 				</tr>
 				<tr>
-				<td>Ngày sinh:</td>
+				<td>Date of birth:</td>
 					<td>
 						<select name="ngay">
-							<?php 
+							<?php
 							for($i = 1; $i <=31 ; $i++)
-								{    
+								{
 							?>
 							<option value="<?php echo $i; ?>"><?php echo ($i <= 9) ? "0".$i : $i; ?></option>
 							<?php
@@ -250,9 +220,9 @@ form label{
 							?>
 						</select>
 						<select name="thang">
-							<?php 
+							<?php
 							for($i = 1; $i <=12 ; $i++)
-								{    
+								{
 							?>
 							<option value="<?php echo $i; ?>"><?php echo ($i <= 9) ? "0".$i : $i; ?></option>
 							<?php
@@ -260,9 +230,9 @@ form label{
 							?>
 						</select>
 						<select name="nam">
-							<?php 
+							<?php
 							for($i = 1975; $i <=2012 ; $i++)
-								{    
+								{
 							?>
 							<option value="<?php echo $i; ?>"><?php echo ($i <= 9) ? "0".$i : $i; ?></option>
 							<?php
@@ -271,33 +241,28 @@ form label{
 						</select>
 					</td>
 				</tr>
-				
+
 				<tr>
-					<td>Địa chỉ:</td>
+					<td>Address:</td>
 					<td><input type="text" name="diachi" size="30">
 				</tr>
 			</table>
-			<div id="form_title">Thông tin tài khoản</div>
-			<i>Dấu ( <span style="color:red">*</span>) là ô bắt buộc điền đầy đủ thông tin</i>
-			
-			
+			<div id="form_title">Account Information</div>
+			<i>Everyline with *( <span style="color:red">*</span>) must be filled</i>
+
+
 			<table width="500px" cellpadding="5" cellspacing="5">
                     	<tr>
-                    		<td width="150px" align="left">User Name:</td>
+                    		<td width="150px" align="left">Username:</td>
 							<td width="350px"> <input type="text" name="username" size="30" id="username"><span class="rq"> * </span>
 					<br/><span id="iduser" class="error"><?php echo $usertt;?></span>
                             </td>
                        	</tr>
                         <tr>
-                        	<td   align="left">PassWord:</td>
+                        	<td   align="left">Password:</td>
 						  <td><input type="password" name="password" size="30" id="pass"><span class="rq"> * </span>
 					<br/><span id="idpass"class="error"></span></td>
                         </tr>
-                        <!--<tr>
-                        	<td   align="left">Nhập lại mật khẩu:</td>
-						  <td><input type="password" name="pass2" size="30" id="pass2"><span class="rq"> * </span>
-					<br/><span id="idpass2" class="error"></span></td>
-                        </tr>-->
                         <tr>
                             <td   align="left">Email:</td>
                             <td><input type="text" name="email" size="30"><span class="rq"> * </span>
@@ -307,18 +272,18 @@ form label{
                     	</tr>
                         <tr>
                             <td align="center" colspan="2">
-                              <input name="submit" type="submit" class="_add_" onClick="return check_form();" value="Đăng ký">  
-                                <input class="_add_" type="reset" value="Nhập lại">
+                              <input name="submit" type="submit" class="_add_" onClick="return check_form();" value="Register">
+                                <input class="_add_" type="reset" value="Redo">
                             </td>
                         </tr>
               </table>
-			 
-			
+
+
 		</div>
                 </td>
-			       
+
                   </div>
-			</div>   
+			</div>
         	</div>
         	<div class="clr">
     </div>
@@ -328,18 +293,17 @@ form label{
         <div class="adv_footer">
         </div>
             <div class="footer-info">
-                <?php include"form/lienket.php";?><!--form Liên kết với webslide khác-->
+                <?php include"form/lienket.php";?>
                 <div class="copyright">
-                    <?php include("banquyen.php");?><!--form bản quyền của webslide-->
+                    <?php include("banquyen.php");?>
                 </div>
                 <div class="clr">
                 </div>
             </div>
-            <div class="gop-y"><a href="#"><img src="image/giaodien/gopy0000.jpg" border="0"></a><!--form qua form góp ý(cái này chưa làm)-->
-            </div> 
+            <div class="gop-y"><a href="#"><img src="image/giaodien/gopy0000.jpg" border="0"></a>
+            </div>
 </div>
 	</div>
 </div>
 </body>
 </html>
-

@@ -20,9 +20,7 @@ $(document).pngFix( );
 <div id="login-holder">
 
 	<!-- start logo -->
-	<div id="logo-login">
-		<a><img src="images/shared/logo1.png" width="156" height="40" alt="" /></a>
-	</div>
+
 	<!-- end logo -->
 
 	<div class="clear"></div>

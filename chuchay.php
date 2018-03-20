@@ -6,8 +6,7 @@
                 $noidung=mysql_query("select * from chuchay where id='1'");
                 $row=mysql_fetch_array($noidung);
                 echo $row['noidung'];
-                    
-            ?>
+      ?>
 		</b>
         </font>
 	</marquee>

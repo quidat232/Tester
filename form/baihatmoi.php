@@ -29,36 +29,12 @@ NEW Songs
 				</span>
 			</p>
 		</div>
-		<div class="right list_icon">
-			<div class="right-icon">
-                <a href="download.php" target="_blank" title="Tải bài hát <?php echo $row['tenbaihat']; ?> về máy tính">
-                    <img border="0" src="image/giaodien/down0000.gif" class="hover_img">
-                </a>
-            </div>
-			<!-- Playlist ADD -->
-			<div class="right-icon" id="playlist_22505">
-                <a style="cursor:pointer;" onClick="_load_box(22505);" title="Thêm bài hát <?php echo $row['tenbaihat']; ?> vào nhạc yêu thích">
-                    <img src="image/giaodien/add00000.gif" class="hover_img">
-                </a>
-            </div>
-			<div class="_PL_BOX" id="_load_box_22505" style="display:none;">
-            	<span class="_PL_LOAD" id="_load_box_pl_22505"></span>
-            </div>
-
-			<!-- End playlist ADD -->
-			<div class="clr">
-            </div>
-		</div>
-
 		<div class="clr">
-        </div>
-
+    </div>
 	</div>
 	<?php
 		}
 		}
 	?>
-	<!-- end --->
-	<!--song-->
-</div>
+	</div>
 </div>
